@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:travel_c/activity/ranklocation.dart';
+import 'package:travel_c/screens/detail.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,7 +13,7 @@ class HomePage extends StatelessWidget {
       body: ListView(
         children: [
           SizedBox(
-            height: 300,
+            height: 350,
             child: Stack(
               children: [
                 Positioned(
@@ -34,7 +37,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(bottom: 120),
-                          width: 290,
+                          width: 330,
                           height: 40,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -69,13 +72,11 @@ class HomePage extends StatelessWidget {
                           ),
                           child: Center(
                             child: InkWell(
-                                onTap: (){
-                                },
+                                onTap: () {},
                                 child: const Icon(
                                   Icons.search,
                                   color: Colors.white,
-                                )
-                            ),
+                                )),
                           ),
                         ),
                       ],
@@ -89,7 +90,7 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 220,
+                        height: 250,
                         width: double.infinity,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
@@ -101,6 +102,7 @@ class HomePage extends StatelessWidget {
                             ],
                             dotSize: 4,
                             indicatorBgPadding: 5,
+                            autoplayDuration: Duration(seconds: 3),
                           ),
                         ),
                       ),
@@ -110,6 +112,76 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(
+            height: 5,
+          ),
+          Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Text(
+              'TOP ĐỊA ĐIỂM HIỆN NAY',
+              style: GoogleFonts.comfortaa(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+                color: Colors.black.withOpacity(0.7),
+              ),
+            ),
+            Container(
+              height: 5,
+            ),
+            Container(
+              height: 400,
+              width: 380,
+              decoration: const BoxDecoration(
+                color: Colors.tealAccent,
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              ),
+              child: ListView.builder(
+                itemCount: getRankLocations().length,
+                itemBuilder: (context, index) {
+                  final rankLocation = getRankLocations()[index];
+                  return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailScreen(
+                              name: rankLocation.name,
+                              imageUrl: rankLocation.imageUrl,
+                              url: rankLocation.url, // Truyền đường dẫn Wikipedia
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: rankLocation.color,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: rankLocation.borderColor,
+                              width: 4,
+                            )),
+                        height: 100,
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              rankLocation.imageUrl,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              rankLocation.name,
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ));
+                },
+              ),
+            ),
+          ]),
         ],
       ),
     );
