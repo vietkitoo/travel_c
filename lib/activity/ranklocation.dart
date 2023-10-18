@@ -34,18 +34,18 @@ List<RankLocation> getRankLocations() {
       url: 'https://en.wikipedia.org/wiki/V%C5%A9ng_T%C3%A0u',
     ),
     RankLocation(
-      name: 'Địa điểm 4',
-      imageUrl: 'assets/images/vinhhalong.jpg', // Đặt đường dẫn hình ảnh tương ứng
+      name: 'Hà Nội',
+      imageUrl: 'assets/images/hanoi.jpg', // Đặt đường dẫn hình ảnh tương ứng
       color: Colors.white,
       borderColor: Colors.blue,
-      url: '',
+      url: 'https://vi.wikipedia.org/wiki/H%C3%A0_N%E1%BB%99i',
     ),
     RankLocation(
-      name: 'Địa điểm 5',
-      imageUrl: 'assets/images/vinhhalong.jpg', // Đặt đường dẫn hình ảnh tương ứng
+      name: 'Cao Bằng',
+      imageUrl: 'assets/images/caobang.jpg', // Đặt đường dẫn hình ảnh tương ứng
       color: Colors.white,
       borderColor: Colors.blue,
-      url: '',
+      url: 'https://vi.wikipedia.org/wiki/Cao_B%E1%BA%B1ng',
     ),
     // Thêm các địa điểm khác vào đây
   ];
