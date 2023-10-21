@@ -1,5 +1,5 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travel_c/activity/ranklocation.dart';
 import 'package:travel_c/screens/chatpage.dart';
@@ -97,15 +97,28 @@ class HomePage extends StatelessWidget {
                             width: double.infinity,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: AnotherCarousel(
-                                images: const [
-                                  AssetImage("assets/images/danang.jpg"),
-                                  AssetImage("assets/images/vinhhalong.jpg"),
-                                  AssetImage("assets/images/vungtau.jpg"),
+                              child: CarouselSlider(
+                                items: [
+                                  Image.asset("assets/images/danang.jpg"),
+                                  Image.asset("assets/images/vinhhalong.jpg"),
+                                  Image.asset("assets/images/vungtau.jpg"),
                                 ],
-                                dotSize: 4,
-                                indicatorBgPadding: 5,
-                                autoplayDuration: const Duration(seconds: 3),
+                                options: CarouselOptions(
+                                  height: 400,
+                                  aspectRatio: 16 / 9,
+                                  viewportFraction: 0.8,
+                                  initialPage: 0,
+                                  enableInfiniteScroll: true,
+                                  reverse: false,
+                                  autoPlay: true,
+                                  autoPlayInterval: Duration(seconds: 3),
+                                  autoPlayAnimationDuration:
+                                      Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enlargeCenterPage: true,
+                                  enlargeFactor: 0.3,
+                                  scrollDirection: Axis.horizontal,
+                                ),
                               ),
                             ),
                           ),
@@ -118,73 +131,76 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                Text(
-                  'TOP ĐỊA ĐIỂM HIỆN NAY',
-                  style: GoogleFonts.comfortaa(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
-                ),
-                Container(
-                  height: 5,
-                ),
-                Container(
-                  height: 400,
-                  width: 380,
-                  decoration: const BoxDecoration(
-                    color: Colors.tealAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  ),
-                  child: ListView.builder(
-                    itemCount: getRankLocations().length,
-                    itemBuilder: (context, index) {
-                      final rankLocation = getRankLocations()[index];
-                      return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailScreen(
-                                  name: rankLocation.name,
-                                  imageUrl: rankLocation.imageUrl,
-                                  url: rankLocation.url, // Truyền đường dẫn Wikipedia
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      'TOP ĐỊA ĐIỂM HIỆN NAY',
+                      style: GoogleFonts.comfortaa(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
+                    ),
+                    Container(
+                      height: 5,
+                    ),
+                    Container(
+                      height: 400,
+                      width: 380,
+                      decoration: const BoxDecoration(
+                        color: Colors.tealAccent,
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      ),
+                      child: ListView.builder(
+                        itemCount: getRankLocations().length,
+                        itemBuilder: (context, index) {
+                          final rankLocation = getRankLocations()[index];
+                          return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailScreen(
+                                      name: rankLocation.name,
+                                      imageUrl: rankLocation.imageUrl,
+                                      url: rankLocation
+                                          .url, // Truyền đường dẫn Wikipedia
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: rankLocation.color,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: rankLocation.borderColor,
+                                      width: 4,
+                                    )),
+                                height: 100,
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      rankLocation.imageUrl,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      rankLocation.name,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: rankLocation.color,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: rankLocation.borderColor,
-                                  width: 4,
-                                )),
-                            height: 100,
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  rankLocation.imageUrl,
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  rankLocation.name,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          ));
-                    },
-                  ),
-                ),
-              ]),
+                              ));
+                        },
+                      ),
+                    ),
+                  ]),
             ],
           ),
           Positioned(
@@ -193,7 +209,8 @@ class HomePage extends StatelessWidget {
             child: FloatingActionButton(
               onPressed: () {
                 // Xử lý khi bong bóng chat được nhấn
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ChatPage()));
               },
               child: Icon(Icons.chat),
               backgroundColor: Colors.blue, // Màu nền của bong bóng chat

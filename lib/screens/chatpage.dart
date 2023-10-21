@@ -1,34 +1,22 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:travel_c/domain/repository/chat_bot_repository.dart';
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  TextEditingController _messageController = TextEditingController();
-  List<String> _chatMessages = [];
+  final TextEditingController _messageController = TextEditingController();
+  final List<String> _chatMessages = [];
+  final chatbotRepository = ChatBotRepositoryImpl();
 
   Future<String> _sendMessageToBot(String message) async {
-    final response = await http.post(
-      Uri.parse("https://response-answer.onrender.com/fetch"),
-      body: jsonEncode({"Text": message}),
-      headers: {"Content-Type": "application/json"},
-    );
-
-    if (response.statusCode == 200) {
-      final responseJson = json.decode(response.body);
-      final botReply = responseJson["result"];
-
-      // Convert the bot's reply from UTF-8 to a different encoding if needed
-      String formattedBotReply = utf8.decode(utf8.encode(botReply));
-
-      return formattedBotReply;
-    } else {
-      throw Exception('Failed to send message to bot');
-    }
+    final chatModel =
+        await chatbotRepository.getChatBotResponse(message: message);
+    return chatModel.result ?? "";
   }
 
   void _sendAndReceiveMessage(String message) {
@@ -52,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Travel_C"),
+        title: const Text("Travel_C"),
       ),
       body: Column(
         children: [
@@ -64,13 +52,13 @@ class _ChatPageState extends State<ChatPage> {
                   key: Key(index.toString()),
                   title: Text(
                     _chatMessages[index],
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 );
               },
             ),
           ),
-          Divider(height: 1),
+          const Divider(height: 1),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -78,13 +66,13 @@ class _ChatPageState extends State<ChatPage> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Type a message...",
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   onPressed: () {
                     String message = _messageController.text;
                     if (message.isNotEmpty) {
