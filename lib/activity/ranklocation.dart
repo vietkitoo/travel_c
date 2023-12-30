@@ -16,7 +16,7 @@ List<RankLocation> getRankLocations() {
       name: 'Đà Nẵng',
       imageUrl: 'assets/images/danang.jpg', // Đặt đường dẫn hình ảnh tương ứng
       color: Colors.white,
-      borderColor: Colors.yellowAccent,
+      borderColor: Colors.blueGrey,
       url: 'https://en.wikipedia.org/wiki/Da_Nang',
     ),
     RankLocation(
@@ -30,21 +30,21 @@ List<RankLocation> getRankLocations() {
       name: 'Vũng Tàu',
       imageUrl: 'assets/images/vungtau.jpg', // Đặt đường dẫn hình ảnh tương ứng
       color: Colors.white,
-      borderColor: Colors.deepOrange,
+      borderColor: Colors.blueGrey,
       url: 'https://en.wikipedia.org/wiki/V%C5%A9ng_T%C3%A0u',
     ),
     RankLocation(
       name: 'Hà Nội',
       imageUrl: 'assets/images/hanoi.jpg', // Đặt đường dẫn hình ảnh tương ứng
       color: Colors.white,
-      borderColor: Colors.blue,
+      borderColor: Colors.blueGrey,
       url: 'https://vi.wikipedia.org/wiki/H%C3%A0_N%E1%BB%99i',
     ),
     RankLocation(
       name: 'Cao Bằng',
       imageUrl: 'assets/images/caobang.jpg', // Đặt đường dẫn hình ảnh tương ứng
       color: Colors.white,
-      borderColor: Colors.blue,
+      borderColor: Colors.blueGrey,
       url: 'https://vi.wikipedia.org/wiki/Cao_B%E1%BA%B1ng',
     ),
     // Thêm các địa điểm khác vào đây

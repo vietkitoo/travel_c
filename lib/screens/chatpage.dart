@@ -15,7 +15,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<String> _sendMessageToBot(String message) async {
     final chatModel =
-        await chatbotRepository.getChatBotResponse(message: message);
+    await chatbotRepository.getChatBotResponse(message: message);
     return chatModel.result ?? "";
   }
 
@@ -48,11 +48,30 @@ class _ChatPageState extends State<ChatPage> {
             child: ListView.builder(
               itemCount: _chatMessages.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  key: Key(index.toString()),
-                  title: Text(
-                    _chatMessages[index],
-                    style: const TextStyle(fontSize: 16),
+                final isBotMessage = _chatMessages[index].startsWith("Bot:");
+                final messageText = _chatMessages[index].replaceFirst(
+                    RegExp(r'(You: |Bot: )'),
+                    ''); // Loại bỏ "You: " hoặc "Bot: "
+                return Align(
+                  alignment: isBotMessage ? Alignment.centerLeft : Alignment
+                      .centerRight,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: isBotMessage ? Colors.grey.shade300 : Colors.blue
+                          .shade300,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      messageText,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: isBotMessage ? Colors.black : Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 );
               },

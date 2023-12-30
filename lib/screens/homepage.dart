@@ -43,21 +43,12 @@ class HomePage extends StatelessWidget {
                               width: 330,
                               height: 40,
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Search...",
-                                  hintStyle: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    size: 25,
-                                  ),
+                              child: Text(
+                                'TRAVEL_C',
+                                style: GoogleFonts.lobster(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w100,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -74,12 +65,21 @@ class HomePage extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
+                                // Thay thế nút tìm kiếm bằng nút chat
                                 child: InkWell(
-                                    onTap: () {},
-                                    child: const Icon(
-                                      Icons.search,
-                                      color: Colors.white,
-                                    )),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.chat,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -87,7 +87,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 80,
+                      top: 70,
                       left: 15,
                       right: 15,
                       child: Column(
@@ -96,24 +96,25 @@ class HomePage extends StatelessWidget {
                             height: 250,
                             width: double.infinity,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(50),
                               child: CarouselSlider(
                                 items: [
                                   Image.asset("assets/images/danang.jpg"),
                                   Image.asset("assets/images/vinhhalong.jpg"),
                                   Image.asset("assets/images/vungtau.jpg"),
+                                  Image.asset("assets/images/caobang.jpg"),
                                 ],
                                 options: CarouselOptions(
                                   height: 400,
                                   aspectRatio: 16 / 9,
-                                  viewportFraction: 0.8,
+                                  viewportFraction: 1,
                                   initialPage: 0,
                                   enableInfiniteScroll: true,
                                   reverse: false,
                                   autoPlay: true,
-                                  autoPlayInterval: Duration(seconds: 3),
+                                  autoPlayInterval: const Duration(seconds: 3),
                                   autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800),
+                                      const Duration(milliseconds: 800),
                                   autoPlayCurve: Curves.fastOutSlowIn,
                                   enlargeCenterPage: true,
                                   enlargeFactor: 0.3,
@@ -129,7 +130,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 5,
+                height: 1,
               ),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -137,19 +138,19 @@ class HomePage extends StatelessWidget {
                     Text(
                       'TOP ĐỊA ĐIỂM HIỆN NAY',
                       style: GoogleFonts.comfortaa(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         fontSize: 22,
-                        color: Colors.black.withOpacity(0.7),
+                        color: Colors.black,
                       ),
                     ),
                     Container(
                       height: 5,
                     ),
                     Container(
-                      height: 400,
-                      width: 380,
+                      height: 450,
+                      width: 390,
                       decoration: const BoxDecoration(
-                        color: Colors.tealAccent,
+                        color: Colors.greenAccent,
                         borderRadius: BorderRadius.all(Radius.circular(15.0)),
                       ),
                       child: ListView.builder(
@@ -171,50 +172,58 @@ class HomePage extends StatelessWidget {
                                 );
                               },
                               child: Container(
-                                margin: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                                 decoration: BoxDecoration(
                                     color: rankLocation.color,
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
                                     border: Border.all(
                                       color: rankLocation.borderColor,
-                                      width: 4,
+                                      width: 1,
                                     )),
                                 height: 100,
                                 child: Row(
                                   children: [
-                                    Image.asset(
-                                      rankLocation.imageUrl,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          bottomLeft: Radius.circular(30),
+                                        ),
+                                        border: Border(
+                                          right: BorderSide.none,
+                                          top: BorderSide.none,
+                                          bottom: BorderSide.none,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          bottomLeft: Radius.circular(30),
+                                        ),
+                                        child: Image.asset(
+                                          rankLocation.imageUrl,
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 15),
                                     Text(
                                       rankLocation.name,
                                       style: const TextStyle(
-                                          color: Colors.black, fontSize: 20),
+                                          color: Colors.black, fontSize: 20, fontStyle: FontStyle.italic),
                                     ),
                                   ],
                                 ),
-                              ));
+                              ),
+                          );
                         },
                       ),
                     ),
-                  ]),
+                  ],
+              ),
             ],
-          ),
-          Positioned(
-            bottom: 16, // Vị trí ban đầu của bong bóng chat theo trục dọc
-            right: 16, // Vị trí ban đầu của bong bóng chat theo trục ngang
-            child: FloatingActionButton(
-              onPressed: () {
-                // Xử lý khi bong bóng chat được nhấn
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatPage()));
-              },
-              child: Icon(Icons.chat),
-              backgroundColor: Colors.blue, // Màu nền của bong bóng chat
-            ),
           ),
         ],
       ),
