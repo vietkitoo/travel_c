@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             Container(
                               margin: const EdgeInsets.only(bottom: 120),
-                              width: 330,
+                              width: 280,
                               height: 40,
                               alignment: Alignment.center,
                               child: Text(
