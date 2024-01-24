@@ -12,7 +12,7 @@ class DioClient {
   static Dio dio = Dio();
 
   static initialize() {
-    dio.options.baseUrl = "http://172.17.24.37:4000/"; //"http://127.0.0.1:8000/fetch"
+    dio.options.baseUrl = "http://172.17.26.132:4000/"; //"http://127.0.0.1:8000/fetch"
     dio.interceptors.add(AppInterceptors());
     dio.interceptors.add(LogInterceptors());
   }
